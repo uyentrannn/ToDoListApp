@@ -17,16 +17,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtNewItem" />
 
-    <ListView android:id="@+id/lstView"
-        android:layout_width="390dp"
+    <ListView android:id="@+id/listView"
+        android:layout_width="250dp"
+        android:layout_height="560dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+    </ListView>
+
+    <ListView android:id="@+id/timeView"
+        android:layout_width="140dp"
         android:layout_height="560dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/listView"
+        tools:ignore="MissingConstraints">
+    </ListView>
 
     <EditText android:id="@+id/txtNewItem"
         android:layout_width="0dp"
