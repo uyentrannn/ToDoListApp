@@ -21,6 +21,21 @@ public class MainActivity extends AppCompatActivity {
         // Use "activity_main.xml" as the layout
         setContentView(R.layout.activity_main);
 
+        // Reference the "listView" variable to the id "lstView" in the layout
+        listView = (ListView) findViewById(R.id.lstView);
+        addItemEditText = (EditText) findViewById(R.id.txtNewItem);
+
+        // Create an ArrayList of String
+        items = new ArrayList<String>();
+        items.add("item one");
+        items.add("item two");
+
+        // Create an adapter for the list view using Android's built-in item layout
+        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+
+        // Connect the listView and the adapter
+        listView.setAdapter(itemsAdapter);
+
     }
 
 }
