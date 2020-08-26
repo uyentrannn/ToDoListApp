@@ -35,7 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Connect the listView and the adapter
         listView.setAdapter(itemsAdapter);
+    }
 
+    public void onAddItemClick(View view) {
+        String toAddString = addItemEditText.getText().toString();
+        if (toAddString.length() > 0) {
+            itemsAdapter.add(toAddString); // Add text to list view adapter
+            addItemEditText.setText("");
+        }
     }
 
 }
