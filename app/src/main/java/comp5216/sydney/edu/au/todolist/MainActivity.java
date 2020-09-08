@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> itemsTime;
     ArrayAdapter<String> itemsTimeAdapter;
     EditText addItemEditText;
+
+    public final int EDIT_ITEM_REQUEST_CODE = 647;
 
     private void setupListViewListener() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -58,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String updateItem = (String) itemsAdapter.getItem(position);
                 Log.i("MainActivity", "Clicked item " + position + ": " + updateItem);
+
+                Intent intent = new Intent(MainActivity.this, EditToDoItemActivity.class);
+                if (intent != null) {
+                    // put "extras" into the bundle for access in the edit activity
+                    intent.putExtra("item", updateItem);
+                    intent.putExtra("position", position);
+                    // brings up the second activity
+                    startActivityForResult(intent, EDIT_ITEM_REQUEST_CODE);
+                    itemsAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -97,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
             itemsAdapter.add(toAddString); // Add text to list view adapter
             itemsTimeAdapter.add(stringDate); // Add text to list view adapter
             addItemEditText.setText("");
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_ITEM_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Extract name value from result extras
+                String editedItem = data.getExtras().getString("item");
+                int position = data.getIntExtra("position", -1);
+                items.set(position, editedItem); Log.i("Updated Item in list:", editedItem + ",position:" + position);
+                Toast.makeText(this, "updated:" + editedItem, Toast.LENGTH_SHORT).show();
+                itemsAdapter.notifyDataSetChanged();
+            }
         }
     }
 
